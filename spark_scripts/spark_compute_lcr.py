@@ -5,7 +5,7 @@ from pyspark.sql.functions import col, sum as _sum, when, rand, expr
 spark = SparkSession.builder.appName("Basel_III_LCR_Computation").getOrCreate()
 spark.sparkContext.setLogLevel("WARN")
 
-DATA_DIR = "/opt/bitnami/spark/data"
+DATA_DIR = "/opt/airflow/data"
 
 print("--- Starting LCR Computation ---")
 

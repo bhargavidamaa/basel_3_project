@@ -11,7 +11,7 @@ spark = SparkSession.builder \
 spark.sparkContext.setLogLevel("WARN")
 
 # Define paths (pointing to the mapped Docker volume)
-DATA_DIR = "/opt/bitnami/spark/data"
+DATA_DIR = "/opt/airflow/data"
 
 print("--- Starting NPL Computation Pipeline ---")
 

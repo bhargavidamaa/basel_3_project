@@ -1,11 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, DecimalType
 from pyspark.sql.functions import col, sum as _sum, broadcast, round as _round
+from decimal import Decimal
 
 spark = SparkSession.builder.appName("Basel_III_CAR_Computation").getOrCreate()
 spark.sparkContext.setLogLevel("WARN")
 
-DATA_DIR = "/opt/bitnami/spark/data"
+DATA_DIR = "/opt/airflow/data"
 
 print("--- Starting CAR Computation ---")
 
@@ -48,7 +49,7 @@ total_rwa = df_rwa.agg(_sum("risk_weighted_balance").alias("total_rwa")).collect
 tier1_capital = df_capital.filter(col("capital_type") == "Tier 1 Capital").agg(_sum("balance").alias("total_capital")).collect()[0]["total_capital"]
 
 # 5. Calculate CAR
-car_ratio = (tier1_capital / total_rwa) * 100
+car_ratio = (tier1_capital / Decimal(total_rwa)) * 100
 print(f"Total Risk-Weighted Assets (RWA): ${total_rwa:,.2f}")
 print(f"Total Tier 1 Capital: ${tier1_capital:,.2f}")
 print(f"Capital Adequacy Ratio (CAR): {car_ratio:.2f}%")

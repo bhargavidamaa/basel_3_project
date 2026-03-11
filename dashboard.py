@@ -23,7 +23,7 @@ def fetch_reporting_data():
         WHERE run_id = (SELECT run_id FROM regulatory_metrics ORDER BY computation_date DESC LIMIT 1)
     """
     df_bank = pd.read_sql(query_bank, conn)
-    
+    print(df_bank)
     # Fetch the latest FDIC benchmarks
     query_fdic = """
         SELECT metric_name, industry_average 
@@ -31,12 +31,12 @@ def fetch_reporting_data():
         WHERE report_period = (SELECT MAX(report_period) FROM fdic_benchmarks)
     """
     df_fdic = pd.read_sql(query_fdic, conn)
+    print(df_fdic)
     conn.close()
     
     # Merge datasets for easy plotting
     df_merged = pd.merge(df_bank, df_fdic, on='metric_name', how='inner')
     df_merged.rename(columns={'metric_value': 'Bank Metric', 'industry_average': 'FDIC Benchmark'}, inplace=True)
-    
     return df_merged
 
 # ---------------------------------------------------------
