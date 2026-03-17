@@ -41,11 +41,11 @@ if not errorlevel 1 (
     docker rm jenkins 2>nul
 )
 
-REM Run Jenkins in Docker
+REM Run Jenkins in Docker on port 8081 (Airflow uses 8080)
 docker run ^
     --name jenkins ^
     --detach ^
-    --publish 8080:8080 ^
+    --publish 8081:8080 ^
     --publish 50000:50000 ^
     --volume %USERPROFILE%\.jenkins:/var/jenkins_home ^
     --volume //var/run/docker.sock:/var/run/docker.sock ^
@@ -60,7 +60,7 @@ echo ==========================================
 echo.
 echo 1. Wait 30-60 seconds for Jenkins to fully start
 echo.
-echo 2. Access Jenkins at: http://localhost:8080
+echo 2. Access Jenkins at: http://localhost:8081  (NOT 8080 - Airflow uses 8080)
 echo.
 echo 3. Get initial admin password - run this command:
 echo    docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword

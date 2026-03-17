@@ -19,9 +19,11 @@ Go to **Manage Jenkins → Plugin Manager** and install:
 7. **Email Extension Plugin** - For email notifications
 8. **Blue Ocean** (optional) - For better visualization
 
+**Port Note:** Jenkins runs on **port 8081** (not 8080) to avoid conflicts with Airflow.
+
 ```bash
 # Command line installation (if preferred)
-java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin pipeline github docker junit email-ext
+java -jar jenkins-cli.jar -s http://localhost:8081 install-plugin pipeline github docker junit email-ext
 ```
 
 ## Step 2: Create a New Pipeline Job in Jenkins
@@ -52,7 +54,7 @@ In the **Pipeline** section, select:
 2. Click **Settings** → **Webhooks**
 3. Click **Add webhook**
 4. Configure:
-   - **Payload URL**: `http://YOUR_JENKINS_IP:8080/github-webhook/`
+   - **Payload URL**: `http://YOUR_JENKINS_IP:8081/github-webhook/` ⚠️ Note: **Port 8081** (not 8080 - Airflow uses 8080)
    - **Content type**: `application/json`
    - **Events**: 
      - ✅ Push events
@@ -85,7 +87,7 @@ In **Manage Jenkins → System Configuration**, under **GitHub**:
 
 ## Step 7: Manual Pipeline Trigger (First Time)
 
-1. Go to your Jenkins job: `http://YOUR_JENKINS_IP:8080/job/basel3-regulatory-pipeline`
+1. Go to your Jenkins job: `http://YOUR_JENKINS_IP:8081/job/basel3-regulatory-pipeline`
 2. Click **Build Now**
 3. Monitor the build in **Build History**
 

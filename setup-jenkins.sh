@@ -29,7 +29,7 @@ echo "=========================================="
 docker run \
     --name jenkins \
     --detach \
-    --publish 8080:8080 \
+    --publish 8081:8080 \
     --publish 50000:50000 \
     --volume "$JENKINS_HOME:/var/jenkins_home" \
     --volume /var/run/docker.sock:/var/run/docker.sock \
@@ -43,7 +43,7 @@ echo "Initial Setup"
 echo "=========================================="
 echo ""
 echo "1. Wait 30-60 seconds for Jenkins to fully start"
-echo "2. Access Jenkins at: http://localhost:8080"
+echo "2. Access Jenkins at: http://localhost:8081 (NOT 8080 - Airflow uses 8080)"
 echo ""
 echo "3. Get initial admin password:"
 echo "   docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
